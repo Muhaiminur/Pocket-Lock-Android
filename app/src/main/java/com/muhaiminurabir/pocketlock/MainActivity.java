@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity{
             }
 
             loadNativeAd();
-            interstitialAd = new InterstitialAd(this, "1813750035346387_1813751348679589");
+            interstitialAd = new InterstitialAd(this, "1813750035346387_1818035868251137");
             // Set listeners for the Interstitial Ad
             interstitialAd.setAdListener(new InterstitialAdListener() {
                 @Override
