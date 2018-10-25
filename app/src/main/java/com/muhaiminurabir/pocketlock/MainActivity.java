@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity{
         dialogHeader_1.setStyle(Style.HEADER_WITH_TITLE)
                 .withDialogAnimation(true)
                 .setTitle("Allow Access")
-                .setDescription("").withDarkerOverlay(true)
+                .setDescription("This app uses the Device Administrator permission").withDarkerOverlay(true)
                 .setHeaderColor(R.color.colorPrimaryDark)
                 .setPositiveText("OK")
                 .setCancelable(false)
