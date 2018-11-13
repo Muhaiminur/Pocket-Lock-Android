@@ -5,10 +5,12 @@ import android.app.ActivityManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -184,7 +186,30 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void check() {
-        MaterialStyledDialog.Builder dialogHeader_1 = new MaterialStyledDialog.Builder(MainActivity.this);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("This app uses the Device Administrator permission");
+        builder.setMessage("This app uses the Device Administrator permission\n - We need this permission for controlling uncertain touch\n - This Permission may change your device administrative password.")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // FIRE ZE MISSILES!
+                        Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, compName);
+                        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "This app uses the Device Administrator permission\n - We need this permission for controlling uncertain touch\n - This Permission may change your device administrative password.");
+                        startActivityForResult(intent, RESULT_ENABLE);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                })
+                .setCancelable(false);
+        // Create the AlertDialog object and return it
+        builder.create();
+        builder.show();
+
+        /*MaterialStyledDialog.Builder dialogHeader_1 = new MaterialStyledDialog.Builder(MainActivity.this);
         dialogHeader_1.setStyle(Style.HEADER_WITH_TITLE)
                 .withDialogAnimation(true)
                 .setTitle("Allow Access")
@@ -200,7 +225,7 @@ public class MainActivity extends AppCompatActivity{
                         intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Additional text explaining why we need this permission");
                         startActivityForResult(intent, RESULT_ENABLE);
                     }
-                }).show();
+                }).show();*/
     }
 
     @OnClick({R.id.password_lock, R.id.screen_off})
